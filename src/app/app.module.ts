@@ -6,7 +6,7 @@ import { PostCreateComponent } from '../app/posts/post-create/post-create.compon
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatExpansionModule,  MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule } from '@angular/material';
 
-import { HeaderComponent } from './header/header/header.component';
+import { HeaderComponent } from './header/header.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 
 
