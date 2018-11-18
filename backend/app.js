@@ -21,13 +21,33 @@ app.use((req, res, next) => {
   next();
 });
 
+app.delete('/api/delete/:id', (req, res) => {
+  Post.deleteOne({_id: req.params.id}).then((result) => {
+   res.status(200).json({
+    message: "Post Deleted Successfully"
+  });
+  })
+  .catch(err => {
+    console.log("error message: ", err.message);
+  })
+});
+
 app.post('/api/posts', (req, res, next) => {
   const post = new Post({title: req.body.title, content: req.body.content});
-  post.save();
-  // console.log(post);
-  res.status(201).json({
-    message: "post added successfully"
+  post.save().then(() => {
+  Post.findOne({title: post.title}).then(result => {
+    res.status(201).json({
+    message: "post added successfully",
+    newPost: { id: result._id, title: '', content: ''}
   });
+  })
+  .catch(err => {
+    console.log( 'problem in Getting new post -> ' + err.message);
+})
+})
+  .catch(err => {
+      console.log( 'problem in Adding new post -> ' + err.message);
+  })
 });
 
 

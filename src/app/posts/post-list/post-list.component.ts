@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
 import { Subscription } from 'rxjs';
+import { post } from 'selenium-webdriver/http';
 
 
 @Component({
@@ -34,6 +35,12 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.postsSub.unsubscribe();
   }
 
+  onDelete(postId: string) {
+    console.log(postId);
+    this.postsServ.deletePost(postId);
+    //  if ( confirm('It will delete the post') === true) {
 
+  //   }
+  }
 
 }
