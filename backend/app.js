@@ -33,23 +33,17 @@ app.delete('/api/delete/:id', (req, res) => {
 });
 
 app.post('/api/posts', (req, res, next) => {
-  const post = new Post({title: req.body.title, content: req.body.content});
-  post.save().then(() => {
-  Post.findOne({title: post.title}).then(result => {
+  const post = new Post({id: null, title: req.body.title, content: req.body.content});
+  post.save().then(result => {
     res.status(201).json({
     message: "post added successfully",
-    newPost: { id: result._id, title: '', content: ''}
+    createdId: result._id
   });
   })
   .catch(err => {
     console.log( 'problem in Getting new post -> ' + err.message);
 })
 })
-  .catch(err => {
-      console.log( 'problem in Adding new post -> ' + err.message);
-  })
-});
-
 
 app.get('/api/posts', (req, res, next) => {
   Post.find().then( (results) => {
@@ -61,7 +55,7 @@ app.get('/api/posts', (req, res, next) => {
 });
 
 app.use((req, res, next) => {
-  res.end('first response   from express');
+  res.end('first response from express');
 });
 
 module.exports = app;

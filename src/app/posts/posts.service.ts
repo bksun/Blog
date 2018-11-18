@@ -49,11 +49,11 @@ private postsUpdated = new Subject<Post[]>();
 
   addPost( title: string, content: string) {
     const post: Post = { id: null, title: title, content: content};
-    this.http.post<{message: string; newPost: Post}>('http://localhost:3000/api/posts', post)
+    this.http.post<{message: string, createdId: string}>('http://localhost:3000/api/posts', post)
     .subscribe((postData ) => {
-      console.log('new data: ' + (postData.newPost.id));
-      console.log(this.posts);
-      this.posts.push( { id: postData.newPost.id, title: title, content: content} );
+      console.log(postData);
+      post.id = postData.createdId;
+      this.posts.push(post);
       this.postsUpdated.next([...this.posts]);
     });
   }
