@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatExpansionModule,  MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 
+import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
@@ -16,7 +17,8 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
     AppComponent,
     PostCreateComponent,
     HeaderComponent,
-    PostListComponent
+    PostListComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

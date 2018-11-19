@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const Post = require('./model/post.model');
+const postRoute = require('./routes/posts');
 
 var app = express();
 app.use(bodyParser.json());
@@ -14,48 +14,14 @@ mongoose.connect('mongodb://localhost/blog', { useMongoClient: true, promiseLibr
   .catch((err) => console.error(err));
 
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept" );
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
-  next();
-});
-
-app.delete('/api/delete/:id', (req, res) => {
-  Post.deleteOne({_id: req.params.id}).then((result) => {
-   res.status(200).json({
-    message: "Post Deleted Successfully"
+  app.use((req, res, next) => {
+    console.log(req.path);
+    // console.log(req);
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept" );
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
+    next();
   });
-  })
-  .catch(err => {
-    console.log("error message: ", err.message);
-  })
-});
 
-app.post('/api/posts', (req, res, next) => {
-  const post = new Post({id: null, title: req.body.title, content: req.body.content});
-  post.save().then(result => {
-    res.status(201).json({
-    message: "post added successfully",
-    createdId: result._id
-  });
-  })
-  .catch(err => {
-    console.log( 'problem in Getting new post -> ' + err.message);
-})
-})
-
-app.get('/api/posts', (req, res, next) => {
-  Post.find().then( (results) => {
-    res.status(200).json(
-      {"message": "Data fetched successfully",
-      "posts": results}
-     );
-    })
-});
-
-app.use((req, res, next) => {
-  res.end('first response from express');
-});
-
+app.use("/app/posts", postRoute);
 module.exports = app;
