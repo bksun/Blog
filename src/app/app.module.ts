@@ -5,13 +5,16 @@ import { AppComponent } from './app.component';
 import { PostCreateComponent } from '../app/posts/post-create/post-create.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatExpansionModule,  MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule } from '@angular/material';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { SignupComponent } from './signup/signup.component';
+// import { AuthServiceService } from './auth-service.service';
+import {  AuthInterceptorService } from './auth-interceptor.service';
+
 
 @NgModule({
   declarations: [
@@ -34,7 +37,7 @@ import { SignupComponent } from './signup/signup.component';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
 

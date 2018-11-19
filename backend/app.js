@@ -17,14 +17,12 @@ app.use(bodyParser.urlencoded({'extended':'false'}));
 app.use((req, res, next) => {
     console.log(req.path);
     res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept" );
+    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization" );
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
     next();
   });
 
-  //console.log("API before call");
   app.use("/api/posts", postRoute);
   app.use("/api/user",  userRoute);
-//  console.log("API After call");
 
 module.exports = app;
