@@ -2,6 +2,8 @@ const express = require('express');
 const Post = require('../model/post.model');
 const router = express.Router();
 
+const checkAuth = require("../middleware/check-auth");
+
 console.log('API Checking...');
 
 router.use((req, res, next) => {
@@ -13,7 +15,7 @@ router.use((req, res, next) => {
 });
 
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', checkAuth, (req, res, next) => {
   console.log('reached to delete', req.params.id);
   Post.deleteOne({_id: req.params.id}).then((result) => {
    res.status(200).json({
@@ -25,7 +27,7 @@ router.delete('/:id', (req, res, next) => {
   })
 });
 
-router.post('/', (req, res, next) => {
+router.post('/', checkAuth, (req, res, next) => {
   console.log('reached to post');
   const post = new Post({id: null, title: req.body.title, content: req.body.content});
   post.save().then(result => {
