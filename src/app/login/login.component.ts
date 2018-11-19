@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Content } from '@angular/compiler/src/render3/r3_ast';
 import { NgForm } from '@angular/forms';
+import { AuthServiceService } from '../auth-service.service';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,7 @@ import { NgForm } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(public authServ: AuthServiceService) { }
 
   ngOnInit() {
   }
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
     if (loginForm.invalid) {
       return;
     }
-    console.log(loginForm.value);
+     console.log('frontend:', loginForm.value);
+     this.authServ.loginUser(loginForm.value.email, loginForm.value.password);
      loginForm.resetForm();
     }
 

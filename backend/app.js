@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const postRoute = require('./routes/posts');
-// const userRoute = require('./routes/user');
+const userRoute = require('./routes/user');
 
 
 mongoose.connect('mongodb://localhost/blog', { useMongoClient: true, promiseLibrary: require('bluebird') })
@@ -22,9 +22,9 @@ app.use((req, res, next) => {
     next();
   });
 
-  console.log("API before call");
+  //console.log("API before call");
   app.use("/api/posts", postRoute);
-  // app.use("/api/user",  userRoute);
-  console.log("API After call");
+  app.use("/api/user",  userRoute);
+//  console.log("API After call");
 
 module.exports = app;
