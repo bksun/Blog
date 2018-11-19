@@ -59,7 +59,7 @@ private postsUpdated = new Subject<Post[]>();
   }
 
   deletePost(postId: string) {
-    this.http.delete<{message: string}>('http://localhost:3000/api/delete/' + postId)
+    this.http.delete<{message: string}>('http://localhost:3000/api/posts  /' + postId)
     .subscribe( ( message) => {
       this.posts = this.posts.filter( post => post.id !== postId);
       this.postsUpdated.next([...this.posts]);

@@ -2,7 +2,19 @@ const express = require('express');
 const Post = require('../model/post.model');
 const router = express.Router();
 
-router.delete('/api/delete/:id', (req, res) => {
+console.log('API Checking...');
+
+router.use((req, res, next) => {
+  console.log(req.path);
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept" );
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
+  next();
+});
+
+
+router.delete('/:id', (req, res, next) => {
+  console.log('reached to delete', req.params.id);
   Post.deleteOne({_id: req.params.id}).then((result) => {
    res.status(200).json({
     message: "Post Deleted Successfully"
@@ -13,7 +25,8 @@ router.delete('/api/delete/:id', (req, res) => {
   })
 });
 
-router.post('/api/posts', (req, res, next) => {
+router.post('/', (req, res, next) => {
+  console.log('reached to post');
   const post = new Post({id: null, title: req.body.title, content: req.body.content});
   post.save().then(result => {
     res.status(201).json({
@@ -26,7 +39,7 @@ router.post('/api/posts', (req, res, next) => {
 })
 })
 
-router.get('/api/posts', (req, res, next) => {
+router.get('/', (req, res, next) => {
   console.log('reached to get');
   Post.find().then( (results) => {
     res.status(200).json(
@@ -36,5 +49,6 @@ router.get('/api/posts', (req, res, next) => {
     })
 });
 
+console.log('post API coming out');
 
 module.exports = router;

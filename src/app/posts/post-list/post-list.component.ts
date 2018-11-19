@@ -38,9 +38,6 @@ export class PostListComponent implements OnInit, OnDestroy {
   onDelete(postId: string) {
     console.log(postId);
     this.postsServ.deletePost(postId);
-    //  if ( confirm('It will delete the post') === true) {
-
-  //   }
   }
 
 }
