@@ -3,7 +3,7 @@ import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
 import { Subscription } from 'rxjs';
 import { post } from 'selenium-webdriver/http';
-
+import { AuthServiceService } from '../../auth-service.service';
 
 @Component({
   selector: 'app-post-list',
@@ -12,16 +12,13 @@ import { post } from 'selenium-webdriver/http';
 })
 export class PostListComponent implements OnInit, OnDestroy {
 
-  // posts = [
-  //   { title: 'First Post', content: 'This is content of First post' },
-  //   { title: 'Second Post', content: 'This is content of Second post' },
-  //   { title: 'Third Post', content: 'This is content of Third post' }
-  // ];
-
    posts: Post[] = [];
-   postsSub: Subscription;
+   private postsSub: Subscription;
+   private authStatusSub: Subscription;
+   isAuthenticated = false;
+   userAuthenticated = false;
 
-  constructor( public postsServ: PostsService ) { }
+  constructor( public postsServ: PostsService, private authServ: AuthServiceService ) { }
 
   ngOnInit() {
     this.postsServ.getPosts();
@@ -29,10 +26,16 @@ export class PostListComponent implements OnInit, OnDestroy {
                 .subscribe((posts) => {
                     this.posts = posts;
                 });
+
+    this.isAuthenticated = this.authServ.getIsAuthenticated();
+    this.authStatusSub   = this.authServ.getAuthStatusListener().subscribe(userAuth => {
+      this.userAuthenticated = userAuth;
+    });
   }
 
   ngOnDestroy() {
     this.postsSub.unsubscribe();
+    this.authStatusSub.unsubscribe();
   }
 
   onDelete(postId: string) {

@@ -4,7 +4,7 @@
       {{ post.title }}
     </mat-expansion-panel-header>
        {{ post.content }}
-       <mat-action-row>
+       <mat-action-row *ngIf="isAuthenticated">
         <button mat-button color="primary">Edit</button>
         <button mat-button color="accent" (click)="onDelete(post.id)">Delete</button>
       </mat-action-row>
