@@ -1,5 +1,5 @@
-<form (submit)="onLogin(loginForm)" #loginForm="ngForm" >
-  <mat-card>
+<mat-card>
+    <form (submit)="onLogin(loginForm)" #loginForm="ngForm" >
 
     <mat-form-field>
       <input  type="email" name = "email" placeholder="Enter Email" ngModel matInput #emailInput="ngModel" required email>
@@ -19,7 +19,6 @@
     <button mat-raised-button type="submit" color="accent"> Login</button>
       &nbsp;&nbsp;&nbsp;
     <button mat-raised-button type="reset" color="warn"> Reset</button>
-
-  </mat-card>
   </form>
+</mat-card>
 

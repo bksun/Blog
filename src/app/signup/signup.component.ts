@@ -9,7 +9,7 @@ import { AuthServiceService } from '../auth-service.service';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-
+  isLoading = false;
   constructor(public authServ: AuthServiceService) { }
 
   ngOnInit() {
@@ -20,6 +20,7 @@ export class SignupComponent implements OnInit {
       return;
     }
 
+      this.isLoading = true;
       this.authServ.createUser(signupForm.value.email, signupForm.value.password);
       console.log(signupForm.value);
       signupForm.resetForm();

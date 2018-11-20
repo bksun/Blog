@@ -10,17 +10,21 @@ import { AuthServiceService } from '../auth-service.service';
 })
 export class LoginComponent implements OnInit {
 
+  isLoading = false;
+
   constructor(public authServ: AuthServiceService) { }
 
   ngOnInit() {
   }
+
 
   onLogin( loginForm: NgForm) {
 
     if (loginForm.invalid) {
       return;
     }
-     console.log('frontend:', loginForm.value);
+    this.isLoading = true;
+    console.log('frontend:', loginForm.value);
      this.authServ.loginUser(loginForm.value.email, loginForm.value.password);
      loginForm.resetForm();
     }
